@@ -1,0 +1,118 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+
+@using System.Web;
+@{
+    Layout = "Master.cshtml";
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var sto = Model.Root().DescendantOrSelfOfType("stories");
+
+    var sto1 = Model.Root().DescendantOrSelfOfType("story");
+    var cmts = Model.Root().DescendantOrSelfOfType("Comments");
+
+    //Trang hiện tại
+    var currentPage = 1;
+    var httpContext = HttpContextAccessor.HttpContext;
+    int.TryParse(httpContext.Request.Query["page"], out currentPage);
+
+    //Bài trên mỗi trang
+    var postsPerPage = 6;
+
+    //Tổng số bài
+    var totalPosts = sto.Children().Count();
+
+    //Tổng số trang
+    var totalPages = (int)Math.Ceiling((double)totalPosts / postsPerPage);
+
+    //Nhảy
+    var skip = (currentPage - 1) * postsPerPage;
+
+    //Bài viết
+    var posts = sto.Children().OrderByDescending(x => x.CreateDate).Skip(skip).Take(postsPerPage);
+
+}
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("homeTitle5", fallback: Fallback.ToAncestors)</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("storiesTitle") <i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        @*<div style="padding-left: 921px;">
+            <input id="keyword" placeholder="Search" type="text"/>
+            <button id="search" class="float-left readmore" onclick="search()" style="width: 40px;">
+                <span class="icon-search">
+
+                </span>
+            </button>
+        </div>*@
+        <div class="row">
+
+            @foreach (var item in posts)
+            {
+                var avatar = item.Value<IPublishedContent>("storyImage");
+                <div class="col-md-4 ftco-animate">
+                    <div class="blog-entry">
+                        <a class="block-20" style="background-image: url(@avatar.Url());"></a>
+                        <div class="text px-4 pt-3 pb-4">
+                            <div class="meta">
+                                <div>@item.Value("storyDate")</div>
+                                <div>@item.CreatorName()</div>
+                            </div>
+                            <h3 class="heading">
+                                <a>@item.Value("storyName")</a>
+                            </h3>
+                            <p class="clearfix">
+                                <a id="img_view" href="@item.Url()" style="border: solid; color:black;" onclick="incrementViewCount(@item.Id)" class="float-left readmore">@Umbraco.GetDictionaryValue("readmore")</a>
+                                <hr>
+                                <img src="/images/flag/viewer.png" style="width: 25px; height: 25px;opacity: 0.5;">
+                                <input disabled style="width:200px; background-color:white; border:none;" value=" @item.Value("storyView") " />
+                                @{
+                                    var count = 0;
+                                }
+                                @foreach (var item1 in cmts.Children().Where(x => x.Value<int>("cmtID") == item.Id))
+                                {
+                                    count++;
+                                }
+                                @if (count != null)
+                                {
+                                    <a class="float-right meta-chat"><span class="icon-chat"></span>@count</a>
+                                }
+                                else
+                                {
+                                    <a class="float-right meta-chat"><span class="icon-chat"></span> 0</a>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row no-gutters my-5">
+            <div class="col text-center">
+                <div class="block-27">
+                    <ul>
+                        @for (var i = 1; i <= totalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a href="?page=@i"> @i </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/master/stories.js"></script>

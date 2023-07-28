@@ -1,0 +1,99 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using UmbracoFood.Controllers;
+@{
+    Layout = "Master.cshtml";
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var contact = Model.Root().DescendantOrSelfOfType("contact");
+}
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("contactTitle")</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("homeTitle6", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section contact-section bg-light">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+            <div class="col-md-12 mb-4">
+                <h2 class="h4 font-weight-bold">@Model.Value("contactContent")</h2>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-md-3 d-flex">
+                <div class="dbox">
+                    <p><span>@contact.Value("address")</span>@contact.Value("contactAddress")</p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="dbox">
+                    <p><span>@contact.Value("phone")</span> <a href="tel://0905669865">@contact.Value("contactPhone")</a></p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="dbox">
+                    <p><span>Email:</span> <a href="mailto:lecao11102001@gmail.com">@Model.Value("contactEmail")</a></p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="dbox">
+                    <p><span>Website</span> <a href="#">@Model.Value("contactWebsite")</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+    <div class="container">
+        <div class="row d-flex align-items-stretch no-gutters">
+            <div class="col-md-6 p-5 order-md-last">
+
+                <h2 class="h4 mb-5 font-weight-bold">@contact.Value("contactTitle")</h2>
+
+                @if(TempData["ContactResult"]!=null){
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                        @TempData["ContactResult"].ToString();
+                    </div>
+                }
+
+                @using (Html.BeginUmbracoForm("SubmitForm", "ContactUs", FormMethod.Post))
+                @*<ContactUsController>("SubmitForm")*@
+                {
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" class="form-control" required placeholder="@Umbraco.GetDictionaryValue("txt_name")">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="email" name="email" class="form-control" required placeholder="@Umbraco.GetDictionaryValue("txt_email")">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" class="form-control" required placeholder="@Umbraco.GetDictionaryValue("txt_subject")">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="message" cols="30" rows="7" class="form-control" required placeholder="@Umbraco.GetDictionaryValue("txt_message")"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" id="sendmessage" class="btn btn-primary py-3 px-5">@Umbraco.GetDictionaryValue("guitinnhan")</button>
+                    </div>
+                }
+                
+            </div>
+            <div class="col-md-6 d-flex align-items-stretch">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    </section>

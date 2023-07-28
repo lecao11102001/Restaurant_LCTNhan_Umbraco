@@ -1,0 +1,195 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var foods = Model.Root().DescendantOrSelfOfType("specialties");
+}
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("homeTitle3",fallback:Fallback.ToAncestors)</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("specialtiesTitle") <i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">@Model.Value("homeTitle3",fallback:Fallback.ToAncestors)</span>
+                <br />
+                <h2 class="mb-4">@Umbraco.GetDictionaryValue("ourmenu")</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentBreakfast",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Breakfast")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentLunch", fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Lunch")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDinner", fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Dinner")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <!--  -->
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDesserts",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Desserts")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentWineCard",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Wine Card")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDrinks",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @foreach (var item in foods.Children())
+                {
+                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Drinks")
+                    {
+                        var avatar = item.Value<IPublishedContent>("foodImage");
+                        <a class="menus d-flex ftco-animate" href="@item.Url()">
+                            <div class="menu-img img" style="background-image: url(@avatar.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item.Value("foodIngredients")</p>
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>

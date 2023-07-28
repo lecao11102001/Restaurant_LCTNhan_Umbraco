@@ -1,0 +1,263 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var image = Model.Value<IPublishedContent>("aboutContentPicture");
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var banner1 = Model.Value<IPublishedContent>("imageBanner1");
+
+    var chef = Model.Root().DescendantOrSelfOfType("chefs");
+    var foods = Model.Root().DescendantOrSelfOfType("specialties");
+
+    var sl1 = chef.Children().Count();
+
+    var sl2 = foods.Children().Count();
+
+    var cmts1 = Model.Root().DescendantOrSelfOfType("Stories");
+    var sl3 = cmts1.Children().Count();
+
+    var cmts = Model.Root().DescendantOrSelfOfType("Comments");
+    var sl4 = cmts.Children().Count();
+
+
+    var random = new Random();
+    var randomFoods = foods.Children().OrderBy(x => random.Next());
+}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("homeTitle2", fallback: Fallback.ToAncestors)</h1></h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("homeTitle2", fallback: Fallback.ToAncestors)<i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-sm-5 img img-2 d-flex align-items-center justify-content-center justify-content-md-end" style="background-image: url(@image.Url()); position: relative">
+                <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
+                    <span class="ion-ios-play"></span>
+                </a>
+            </div>
+            <div class="col-sm-7 wrap-about py-5 ftco-animate">
+                <div class="heading-section mt-5 mb-4">
+                    <div class="pl-lg-5 ml-md-5">
+                        <span class="subheading">@Model.Value("homeTitle2", fallback: Fallback.ToAncestors)</span>
+                        <!--<h2 class="mb-4"></h2>-->
+                    </div>
+                </div>
+                <div class="pl-lg-5 ml-md-5">
+                    <p>@Model.Value("aboutContent")</p>
+                    <h3 class="mt-5">@Model.Value("homeTitle3", fallback:Fallback.ToAncestors)</h3>
+                    <div class="thumb my-4 d-flex">
+                        @{
+                            var count4 = 0;
+                        }
+                        @foreach (var item in randomFoods)
+                        {
+                            count4++;
+                            if (count4 == 4)
+                            {
+                                break;
+                            }
+                            var avatar = item.Value<IPublishedContent>("foodImage");
+                            <a id="hrefspecialties" href="../specialties/" class="thumb-menu pr-md-4 text-center">
+                                <div class="img" style="background-image: url(@avatar.Url());"></div>
+                                <h4>@item.Value("foodName")</h4>
+                            </a>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row d-md-flex align-items-center justify-content-center">
+            <div class="col-lg-10">
+                <div class="row d-md-flex align-items-center">
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl1">">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("chefs")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl2">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("foods")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl3">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("stories")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl4">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("comments")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">@Umbraco.GetDictionaryValue("chef")</span>
+                <br />
+                <h2 class="mb-4">@Umbraco.GetDictionaryValue("ourmaterchef")</h2>
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var item in chef?.Children())
+            {
+                var avatar = item.Value<IPublishedContent>("chefImage");
+
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="staff">
+                        <div class="img" style="background-image: url(@avatar.Url());"></div>
+                        <div class="text px-4 pt-4">
+                            <h3>@item.Name</h3>
+                            <span class="position mb-2">@item.Value("chefPosition")</span>
+                            <div class="faded">
+                                <p>@item.Value("chefBIO")</p>
+                                <ul class="ftco-social d-flex">
+                                    <li class="ftco-animate"><a href="@item.Value("twitterProfileLink")"><span class="icon-twitter"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("fBProfileLink")"><span class="icon-facebook"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("gGProfileLink")"><span class="icon-google-plus"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("instagramProfileLink")"><span class="icon-instagram"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section testimony-section" style="background-image: url(@banner1.Url());" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <span class="subheading">Testimony</span>
+                <h2 class="mb-4">Happy Customer</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate justify-content-center">
+            <div class="col-md-7">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_2.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_4.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">@Umbraco.GetDictionaryValue("morehealthyfoods")</span>
+                @Model.Value("aboutContent1")
+                <p><a href="../reservation/" class="btn btn-primary px-4 py-3">@Umbraco.GetDictionaryValue("bookatable")</a></p>
+            </div>
+        </div>
+    </div>
+</section>

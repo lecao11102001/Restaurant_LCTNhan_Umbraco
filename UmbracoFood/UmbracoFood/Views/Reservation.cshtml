@@ -1,0 +1,104 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+
+}
+<!-- END nav -->
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("homeTitle4", fallback: Fallback.ToAncestors)</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors) <i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("homeTitle4", fallback: Fallback.ToAncestors)<i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-5 ftco-animate img img-2" style="background-image: url(/images/bg_6.jpg);"></div>
+            <div class="col-md-7 ftco-animate makereservation p-4 p-md-5">
+                <div class="heading-section ftco-animate mb-5">
+                    <span class="subheading">@Model.Value("homeContent1", fallback:Fallback.ToAncestors)</span>
+                    <h2 class="mb-4">@Model.Value("homeContent2", fallback: Fallback.ToAncestors)</h2>
+                </div>
+
+                @if (TempData["ReservationResult"] != null)
+                {
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                        @TempData["ReservationResult"].ToString();
+                    </div>
+                }
+
+                @using (Html.BeginUmbracoForm("MakeReservation", "Reservation", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_name")</label>
+                                <input required type="text" id="name" name="Name" class="form-control" placeholder="@Umbraco.GetDictionaryValue("txt_name")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_email")</label>
+                                <input required type="email" name="Email" class="form-control" placeholder="@Umbraco.GetDictionaryValue("txt_email")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_phone")</label>
+                                <input required type="tel" name="Phone" class="form-control" placeholder="@Umbraco.GetDictionaryValue("txt_phone")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_date")</label>
+                                <input required type="text" name="Date" class="form-control" id="book_date" placeholder="@Umbraco.GetDictionaryValue("txt_date")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_time")</label>
+                                <input required type="text" name="Time" class="form-control" id="book_time" placeholder="@Umbraco.GetDictionaryValue("txt_time")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_person")</label>
+                                @*<div class="select-wrap one-third">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="NumberOfGuests" id="" class="form-control">
+                                        <option value="">@Umbraco.GetDictionaryValue("txt_person")</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4+</option>
+                                    </select>
+                                </div>*@
+                                <input required type="number" name="NumberOfGuests" class="form-control" placeholder="@Umbraco.GetDictionaryValue("txt_person")">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary py-3 px-5">@Umbraco.GetDictionaryValue("makeareservation")</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

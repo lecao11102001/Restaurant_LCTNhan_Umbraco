@@ -1,0 +1,636 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    Layout = "Master.cshtml";
+
+    var image = Model.Value<IPublishedContent>("homeTitlePicture");
+    var image1 = Model.Value<IPublishedContent>("homeTitlePicture2");
+    var image2 = Model.Value<IPublishedContent>("homeContentPicture1");
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var banner1 = Model.Value<IPublishedContent>("imageBanner1");
+    var reservation = Model.Root().DescendantOfType("reservation");
+    var chef = Model.Root().DescendantOrSelfOfType("chefs");
+    var foods = Model.Root().DescendantOrSelfOfType("specialties");
+
+    var sl1 = chef.Children().Count();
+
+    var sl2 = foods.Children().Count();
+
+    var cmts1 = Model.Root().DescendantOrSelfOfType("Stories");
+    var sl3 = cmts1.Children().Count();
+
+    var cmts = Model.Root().DescendantOrSelfOfType("Comments");
+    var sl4 = cmts.Children().Count();
+
+    var random = new Random();
+    var randomFoods = foods.Children().OrderBy(x => random.Next());
+}
+
+<section class="home-slider js-fullheight owl-carousel bg-white">
+    <div class="slider-item js-fullheight">
+        <div class="overlay"></div>
+        <div class="container-fluid p-0">
+            <div class="row d-md-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+                <div class="one-third order-md-last img js-fullheight" style="background-image:url(@image.Url());">
+
+                    <div class="overlay"></div>
+                </div>
+                <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                    <div class="text mt-md-5">
+                        <h1 class="mb-4">@Umbraco.GetDictionaryValue("hometitle1")</h1>
+                        <p>@Model.Value("homeTitleContent")</p>
+                        <div class="thumb mt-4 mb-3 d-flex">
+                            @{
+                                var count8 = 0;
+                            }
+                            @foreach (var item in randomFoods)
+                            {
+                                count8++;
+                                if (count8 == 4)
+                                {
+                                    break;
+                                }
+                                var avatar = item.Value<IPublishedContent>("foodImage");
+                                <a href="@foods.Url()" class="thumb-menu pr-md-4 text-center">
+                                    <div class="img" style="background-image: url(@avatar.Url());"></div>
+                                    <h4>@item.Value("foodName")</h4>
+                                </a>
+                            }
+                        </div>
+                        <p><a href="@reservation.Url()" class="btn btn-primary px-4 py-3 mt-3 ">@Umbraco.GetDictionaryValue("bookatable")</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-item js-fullheight">
+        <div class="overlay"></div>
+        <div class="container-fluid p-0">
+            <div class="row d-flex no-gutters slider-text js-fullheight align-items-center justify-content-end" data-scrollax-parent="true">
+                <div class="one-third order-md-last img js-fullheight" style="background-image:url(@image1.Url());">
+                    <div class="overlay"></div>
+                </div>
+                <div class="one-forth d-flex js-fullheight align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                    <div class="text mt-md-5">
+                        <h1 class="mb-4">@Umbraco.GetDictionaryValue("hometitle2")</h1>
+                        <p>@Model.Value("homeTitleContent")</p>
+                        <div class="thumb mt-4 mb-3 d-flex">
+                            @{
+                                var count7 = 0;
+                            }
+                            @foreach (var item in randomFoods)
+                            {
+                                count7++;
+                                if (count7 == 4)
+                                {
+                                    break;
+                                }
+                                var avatar = item.Value<IPublishedContent>("foodImage");
+                                <a href="@foods.Url()" class="thumb-menu pr-md-4 text-center">
+                                    <div class="img" style="background-image: url(@avatar.Url());"></div>
+                                    <h4>@item.Value("foodName")</h4>
+                                </a>
+
+                            }
+                        </div>
+                        <p><a href="@reservation.Url()" class="btn btn-primary px-4 py-3 mt-3 ">@Umbraco.GetDictionaryValue("bookatable")</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-sm-5 img img-2 d-flex align-items-center justify-content-center justify-content-md-end" style="background-image: url(@image2.Url()); position: relative">
+                <a href="https://vimeo.com/45830194" class="icon-video popup-vimeo d-flex justify-content-center align-items-center">
+                    <span class="ion-ios-play"></span>
+                </a>
+            </div>
+            <div class="col-sm-7 wrap-about py-5 ftco-animate">
+                <div class="heading-section mt-5 mb-4">
+                    <div class="pl-lg-5 ml-md-5">
+                        <span class="subheading">@Model.Value("homeTitle2")</span>
+                    </div>
+                </div>
+                <div class="pl-lg-5 ml-md-5">
+                    <p>@Model.Value("homeContent")</p>
+                    <h3 class="mt-5">@Model.Value("homeTitle3")</h3>
+                    <div class="thumb my-4 d-flex">
+                        @{
+                            var count4 = 0;
+                        }
+                        @foreach (var item in randomFoods)
+                        {
+                            count4++;
+                            if (count4 == 4)
+                            {
+                                break;
+                            }
+                            var avatar = item.Value<IPublishedContent>("foodImage");
+                            <a href="@foods.Url()" class="thumb-menu pr-md-4 text-center">
+                                <div class="img" style="background-image: url(@avatar.Url());"></div>
+                                <h4>@item.Value("foodName")</h4>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row d-md-flex align-items-center justify-content-center">
+            <div class="col-lg-10">
+                <div class="row d-md-flex align-items-center">
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl1">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("chefs")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl2">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("foods")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18">
+                            <div class="text">
+                                <strong class="number" data-number="@sl3">0</strong>
+                                <span>@Umbraco.GetDictionaryValue("stories")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md d-flex justify-content-center counter-wrap ftco-animate" id="update-time">
+                        <div class="block-18">
+                            <div class="text" id="commentupdate">
+                                <strong id="comment-count-count" class="number" data-number="@sl4">@sl4</strong>
+                                <span>@Umbraco.GetDictionaryValue("comments")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">@Model.Value("homeTitle3")</span>
+                <br />
+                <h2 class="mb-4">@Umbraco.GetDictionaryValue("ourmenu")</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentBreakfast")</h3>
+                </div>
+                @{
+                    var count = 0;
+                }
+                @foreach (var item1 in randomFoods)
+                {
+
+                    @if (string.Join(", ", item1.Value<string[]>("foodType")) == "Breakfast")
+                    {
+                        count++;
+
+                        @if (count == 4)
+                        {
+                            break;
+                        }
+
+                        var avatar1 = item1.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item1.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item1.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item1.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentLunch",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @{
+                    var count1 = 0;
+                }
+                @foreach (var item2 in randomFoods)
+                {
+                    @if (string.Join(", ", item2.Value<string[]>("foodType")) == "Lunch")
+                    {
+                        count1++;
+
+                        @if (count1 == 4)
+                        {
+                            break;
+                        }
+
+                        var avatar2 = item2.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar2.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item2.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item2.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item2.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDinner",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @{
+                    var count2 = 0;
+                }
+                @foreach (var item3 in randomFoods)
+                {
+                    @if (string.Join(", ", item3.Value<string[]>("foodType")) == "Dinner")
+                    {
+                        count2++;
+
+                        @if (count2 == 4)
+                        {
+                            break;
+                        }
+
+                        var avatar3 = item3.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar3.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item3.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item3.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item3.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDesserts",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @{
+                    var count3 = 0;
+                }
+                @foreach (var item4 in randomFoods)
+                {
+                    @if (string.Join(", ", item4.Value<string[]>("foodType")) == "Desserts")
+                    {
+                        count3++;
+
+                        @if (count3 == 4)
+                        {
+                            break;
+                        }
+
+                        var avatar3 = item4.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar3.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item4.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item4.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item4.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentWineCard",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @{
+                    var count6 = 0;
+                }
+                @foreach (var item1 in randomFoods)
+                {
+
+                    @if (string.Join(", ", item1.Value<string[]>("foodType")) == "Breakfast")
+                    {
+                        count6++;
+
+                        @if (count6 == 4)
+                        {
+                            break;
+                        }
+
+                        var avatar1 = item1.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item1.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item1.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item1.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <div class="col-md-6 col-lg-4 menu-wrap">
+                <div class="heading-menu text-center ftco-animate">
+                    <h3>@Model.Value("homeContentDrinks",fallback:Fallback.ToAncestors)</h3>
+                </div>
+                @{
+                    var count5 = 0;
+                }
+                @foreach (var item6 in randomFoods)
+                {
+
+
+                    @if (string.Join(", ", item6.Value<string[]>("foodType")) == "Drinks")
+                    {
+                        count5++;
+
+                        @if (count5 == 4)
+                        {
+                            break;
+                        }
+                        var avatar3 = item6.Value<IPublishedContent>("foodImage");
+                        <div class="menus d-flex ftco-animate">
+                            <div class="menu-img img" style="background-image: url(@avatar3.Url());"></div>
+                            <div class="text">
+                                <div class="d-flex">
+                                    <div class="one-half">
+                                        <h3>@item6.Value("foodName")</h3>
+                                    </div>
+                                    <div class="one-forth">
+                                        <span class="price">@item6.Value("foodPrice") VNĐ</span>
+                                    </div>
+                                </div>
+                                <p>@item6.Value("foodIngredients")</p>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center ftco-animate">
+                <p><a href="@foods.Url()" class="btn btn-black py-3 px-5">@Umbraco.GetDictionaryValue("viewallmenu")</a></p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="ftco-section testimony-section" style="background-image: url(@banner1.Url());" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <span class="subheading">Testimony</span>
+                <br />
+                <h2 class="mb-4">Happy Customer</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate justify-content-center">
+            <div class="col-md-7">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_2.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_4.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text p-3">
+                                <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Arthur Browner</p>
+                                <span class="position">Customer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">@Umbraco.GetDictionaryValue("chef")</span>
+                <br />
+                <h2 class="mb-4">@Umbraco.GetDictionaryValue("ourmaterchef")</h2>
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var item in chef?.Children())
+            {
+                var avatar = item.Value<IPublishedContent>("chefImage");
+
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="staff">
+                        <div class="img" style="background-image: url(@avatar.Url());"></div>
+                        <div class="text px-4 pt-4">
+                            <h3>@item.Name</h3>
+                            <span class="position mb-2">@item.Value("chefPosition")</span>
+                            <div class="faded">
+                                <p>@item.Value("chefBIO")</p>
+                                <ul class="ftco-social d-flex">
+                                    <li class="ftco-animate"><a href="@item.Value("twitterProfileLink")"><span class="icon-twitter"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("fBProfileLink")"><span class="icon-facebook"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("gGProfileLink")"><span class="icon-google-plus"></span></a></li>
+                                    <li class="ftco-animate"><a href="@item.Value("instagramProfileLink")"><span class="icon-instagram"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-5 ftco-animate img img-2" style="background-image: url(/images/bg_6.jpg);"></div>
+            <div class="col-md-7 ftco-animate makereservation p-4 p-md-5">
+                <div class="heading-section ftco-animate mb-5">
+                    <span class="subheading">@Umbraco.GetDictionaryValue("bookatable")</span>
+                    <br />
+                    <h2 class="mb-4">@Umbraco.GetDictionaryValue("makereservation")</h2>
+                </div>
+
+                <form action="#">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_name")</label>
+                                <input type="text" class="form-control" disabled placeholder="@Umbraco.GetDictionaryValue("txt_name")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_email")</label>
+                                <input type="text" class="form-control" disabled placeholder="@Umbraco.GetDictionaryValue("txt_email")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_phone")</label>
+                                <input type="text" class="form-control" disabled placeholder="@Umbraco.GetDictionaryValue("txt_phone")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_date")</label>
+                                <input type="text" class="form-control" disabled id="book_date" placeholder="@Umbraco.GetDictionaryValue("txt_date")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_time")</label>
+                                <input type="text" class="form-control" disabled id="book_time" placeholder="@Umbraco.GetDictionaryValue("txt_time")">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">@Umbraco.GetDictionaryValue("lb_person")</label>
+                                <div class="select-wrap one-third">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="" disabled id="" class="form-control">
+                                        <option value="">@Umbraco.GetDictionaryValue("txt_person")</option>
+                                        <option value="">1</option>
+                                        <option value="">2</option>
+                                        <option value="">3</option>
+                                        <option value="">4+</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group">
+                                <a href="@reservation.Url()" class="btn btn-primary py-3 px-5">@Umbraco.GetDictionaryValue("makeareservation")</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

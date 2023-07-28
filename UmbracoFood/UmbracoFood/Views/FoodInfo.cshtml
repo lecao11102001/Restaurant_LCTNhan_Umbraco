@@ -1,0 +1,475 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+    var banner = Model.Value<IPublishedContent>("imageBanner");
+    var avatar = Model.Value<IPublishedContent>("foodImage");
+    var foods = Model.Root().DescendantOrSelfOfType("specialties");
+
+    var random = new Random();
+    var randomFoods = foods.Children().OrderBy(x => random.Next());
+
+}
+
+<head>
+    <link href="/css1/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css1/global.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/css1/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all" />
+
+    <meta property="og:title" content="Nhân Nè" />
+    <meta property="og:url" content="https://vilai.vn/mon-chinh-pc28550.html" />
+    <meta property="og:image" content="" />
+
+</head>
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url(@banner.Url());" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h1 class="mb-2 bread">@Model.Value("homeTitle3", fallback: Fallback.ToAncestors)</h1>
+                <p class="breadcrumbs"><span class="mr-2"><a href="/">@Model.Value("homeTitle1", fallback: Fallback.ToAncestors)<i class="ion-ios-arrow-forward"></i></a></span> <span class="mr-2"><a href="../">@Model.Value("specialtiesTitle",fallback:Fallback.ToAncestors)<i class="ion-ios-arrow-forward"></i></a></span> <span>@Model.Value("specialtiesInfo", fallback: Fallback.ToAncestors)<i class="ion-ios-arrow-forward"></i></span></p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="wrap">
+    <div class="section group">
+        <div class="cont-desc span_1_of_2">
+            <div class="product-details">
+                <div class="grid images_3_of_2">
+                    <div id="container">
+                        <div id="products_example">
+                            <div id="products">
+                                @*<a href="#" target="_blank">*@
+                                <img src="@avatar.Url()"
+                                     alt=" " />
+                                @*</a>*@
+                                <ul class="pagination">
+                                    @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Breakfast")
+                                    {
+                                        var count = 0;
+                                        @foreach (var item in randomFoods)
+                                        {
+                                            @if (string.Join(", ", item.Value<string[]>("foodType")) == "Breakfast")
+                                            {
+                                                count++;
+                                                if (count == 6)
+                                                {
+                                                    break;
+                                                }
+                                                var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                <li>
+                                                    <a class="menus ftco-animate" href="@item.Url()">
+                                                        <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Lunch")
+                                        {
+                                            var count = 0;
+                                            @foreach (var item in randomFoods)
+                                            {
+                                                @if (string.Join(", ", item.Value<string[]>("foodType")) == "Lunch")
+                                                {
+                                                    count++;
+                                                    if (count == 6)
+                                                    {
+                                                        break;
+                                                    }
+                                                    var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                    <li>
+                                                        <a class="menus ftco-animate" href="@item.Url()">
+                                                            <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                        </a>
+                                                    </li>
+                                                }
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Dinner")
+                                            {
+                                                var count = 0;
+                                                @foreach (var item in randomFoods)
+                                                {
+                                                    @if (string.Join(", ", item.Value<string[]>("foodType")) == "Dinner")
+                                                    {
+                                                        count++;
+                                                        if (count == 6)
+                                                        {
+                                                            break;
+                                                        }
+                                                        var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                        <li>
+                                                            <a class="menus ftco-animate" href="@item.Url()">
+                                                                <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                            </a>
+                                                        </li>
+                                                    }
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Desserts")
+                                                {
+                                                    var count = 0;
+                                                    @foreach (var item in randomFoods)
+                                                    {
+                                                        @if (string.Join(", ", item.Value<string[]>("foodType")) == "Desserts")
+                                                        {
+                                                            count++;
+                                                            if (count == 6)
+                                                            {
+                                                                break;
+                                                            }
+                                                            var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                            <li>
+                                                                <a class="menus ftco-animate" href="@item.Url()">
+                                                                    <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                                </a>
+                                                            </li>
+                                                        }
+
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Wine Card")
+                                                    {
+                                                        var count = 0;
+                                                        @foreach (var item in randomFoods)
+                                                        {
+                                                            @if (string.Join(", ", item.Value<string[]>("foodType")) == "Wine Card")
+                                                            {
+                                                                count++;
+                                                                if (count == 6)
+                                                                {
+                                                                    break;
+                                                                }
+                                                                var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                                <li>
+                                                                    <a class="menus ftco-animate" href="@item.Url()">
+                                                                        <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                                    </a>
+                                                                </li>
+                                                            }
+
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @if (string.Join(", ", Model.Value<string[]>("foodType")) == "Drinks")
+                                                        {
+                                                            var count = 0;
+                                                            @foreach (var item in randomFoods)
+                                                            {
+                                                                @if (string.Join(", ", item.Value<string[]>("foodType")) == "Drinks")
+                                                                {
+                                                                    count++;
+                                                                    if (count == 6)
+                                                                    {
+                                                                        break;
+                                                                    }
+                                                                    var avatar1 = item.Value<IPublishedContent>("foodImage");
+                                                                    <li>
+                                                                        <a class="menus ftco-animate" href="@item.Url()">
+                                                                            <div class="menu-img img" style="background-image: url(@avatar1.Url());"></div>
+                                                                        </a>
+                                                                    </li>
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desc span_3_of_2">
+                    <h2 >@Model.Value("foodName")</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                        incididunt ut labore.
+                    </p>
+                    <div class="price">
+                        <p>Price: <span>@Model.Value("foodPrice") </span>VNĐ</p>
+                    </div>
+                    <div class="available">
+                        @*<p>Available Options :</p>
+                        <ul>
+                            <li>
+                                Size:
+                                <select>
+                                    <option>Large</option>
+                                    <option>Medium</option>
+                                    <option>small</option>
+                                    <option>Large</option>
+                                    <option>small</option>
+                                </select>
+                            </li>
+                            <li>
+                                Quantity:
+                                <select>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                </select>
+                            </li>
+                        </ul>*@
+                    </div>
+                    <div class="share-desc">
+                        <div class="share">
+                            <p>Share Product :</p>
+                            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                                @*<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>*@
+                                <li class="ftco-animate">
+                                    <a onclick="shareOnFacebook()" style="color: red">
+                                        <span class="icon-facebook">
+
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        @*<div class="button"><span><a href="#">Add to Cart</a></span></div>*@
+                        @*<div class="clear"></div>*@
+                    </div>
+                    @*<div class="wish-list">
+                    <ul>
+                    <li class="wish"><a href="#">Add to Wishlist</a></li>
+                    <li class="compare"><a href="#">Add to Compare</a></li>
+                    </ul>
+                    </div>*@
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="product_desc">
+                <div id="horizontalTab">
+                    @*<ul class="resp-tabs-list">
+                    <li>Product Details</li>
+                    <li>product Tags</li>
+                    <li>Product Reviews</li>
+                    <div class="clear"></div>
+                    </ul>*@
+                    <div class="resp-tabs-container">
+                        <div class="product-desc">
+                            <p>
+                                Lorem Ipsum is simply dummy text of the <span>
+                                    printing and typesetting
+                                    industry
+                                </span>. Lorem Ipsum has been the industry's standard dummy text
+                                ever since the 1500s, when an unknown printer took a galley of type and
+                                scrambled it to make a type specimen book. It has survived not only five
+                                centuries, but also the leap into electronic typesetting, remaining
+                                essentially unchanged.
+                            </p>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                1500s, <span>
+                                    when an unknown printer took a galley of type and
+                                    scrambled
+                                </span> it to make a type specimen book. It has survived not
+                                only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged.Lorem Ipsum is simply dummy text of the
+                                printing and typesetting industry. Lorem Ipsum has been the industry's
+                                standard dummy text ever since the 1500s, when an unknown printer took a
+                                galley of type and scrambled it to make a type specimen book. It has
+                                survived not only five centuries, but also the leap into electronic
+                                typesetting, remaining essentially unchanged.Lorem Ipsum is simply dummy
+                                text of the printing and typesetting industry. Lorem Ipsum has been the
+                                industry's standard dummy text ever since the 1500s, when an unknown printer
+                                took a galley of type and scrambled it to make a type specimen book.<span>
+                                    It has survived not only five centuries
+                                </span>, but also the leap into
+                                electronic typesetting, remaining essentially unchanged.
+                            </p>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                make a type specimen book. It has survived not only five centuries, but also
+                                the leap into electronic typesetting, remaining essentially unchanged.
+                            </p>
+                        </div>
+
+                        @*<div class="product-tags">
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                make a type specimen book. It has survived not only five centuries, but also
+                                the leap into electronic typesetting, remaining essentially unchanged.
+                            </p>
+                            <h4>Add Your Tags:</h4>
+                            <div class="input-box">
+                                <input type="text" value="">
+                            </div>
+                            <div class="button"><span><a href="#">Add Tags</a></span></div>
+                        </div>*@
+
+                        @*<div class="review">
+                            <h4>Lorem ipsum Review by <a href="#">Finibus Bonorum</a></h4>
+                            <ul>
+                                <li>Price :<a href="#"><img src="/images/price-rating.png" alt="" /></a></li>
+                                <li>Value :<a href="#"><img src="/images/value-rating.png" alt="" /></a></li>
+                                <li>
+                                Quality :<a href="#"><img src="/images/quality-rating.png" alt="" /></a>
+                                </li>
+                            </ul>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the
+                                1500s, when an unknown printer took a galley of type and scrambled it to
+                                make a type specimen book. It has survived not only five centuries, but also
+                                the leap into electronic typesetting, remaining essentially unchanged.
+                            </p>
+                            <div class="your-review">
+                                <h3>How Do You Rate This Product?</h3>
+                                <p>Write Your Own Review?</p>
+                                <form>
+                                    <div>
+                                        <span><label>Nickname<span class="red">*</span></label></span>
+                                        <span><input type="text" value=""></span>
+                                    </div>
+                                    <div>
+                                        <span>
+                                            <label>
+                                                Summary of Your Review<span class="red">*</span>
+                                            </label>
+                                        </span>
+                                        <span><input type="text" value=""></span>
+                                    </div>
+                                    <div>
+                                        <span><label>Review<span class="red">*</span></label></span>
+                                        <span><textarea> </textarea></span>
+                                    </div>
+                                    <div>
+                                        <span><input type="submit" value="SUBMIT REVIEW"></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            @*<script type="text/javascript">
+            $(document).ready(function () {
+            $('#horizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true   // 100% fit in a container
+            });
+            });
+            </script>*@
+            <div class="content_bottom">
+                <div class="heading">
+                    <h3>Related Products</h3>
+                </div>
+                <div class="see">
+                    <p><a href="@foods.Url()">See all Products</a></p>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="section group">
+                @foreach (var item in randomFoods.Take(4))
+                {
+                    var avatar1 = item.Value<IPublishedContent>("foodImage");
+                    <div class="grid_1_of_4 images_1_of_4">
+                        <a href="@item.Url()"><img src="@avatar1.Url()" alt=""></a>
+                        @*<div class="price" style="border:none">
+                            <div class="add-cart" style="float:none">
+                                <h4><a href="#">Add to Cart</a></h4>
+                            </div>
+                            <div class="clear"></div>
+                        </div>*@
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="rightsidebar span_3_of_1" style="padding-top: 55px">
+            <h2>CATEGORIES</h2>
+            <ul class="side-w3ls">
+                <li><a href="@foods.Url()">@Model.Value("homeContentBreakfast", fallback:Fallback.ToAncestors)</a></li>
+                <li><a href="@foods.Url()">@Model.Value("homeContentLunch", fallback:Fallback.ToAncestors)</a></li>
+                <li><a href="@foods.Url()">@Model.Value("homeContentDinner", fallback:Fallback.ToAncestors)</a></li>
+                <li><a href="@foods.Url()">@Model.Value("homeContentDesserts", fallback:Fallback.ToAncestors)</a></li>
+                <li><a href="@foods.Url()">@Model.Value("homeContentDrinks", fallback:Fallback.ToAncestors)</a></li>
+                <li><a href="@foods.Url()">@Model.Value("homeContentWineCard", fallback:Fallback.ToAncestors)</a></li>
+            </ul>
+            @*<div class="subscribe">
+                <h2>Newsletters Signup</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.......</p>
+                <div class="signup">
+                    <form>
+                        <input type="text" value="E-mail address" onfocus="this.value = '';"
+                               onblur="if (this.value == '') {this.value = 'E-mail address';"><input type="submit" value="Sign up">
+                    </form>
+                </div>
+            </div>
+            <div class="community-poll">
+                <h2>Community POll</h2>
+                <p>What is the main reason for you to purchase products online?</p>
+                <div class="poll">
+                    <form>
+                        <ul>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="1">
+                                <span class="label">
+                                    <label>
+                                        More convenient shipping and delivery
+                                    </label>
+                                </span>
+                            </li>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="2">
+                                <span class="label"><label for="vote_2">Lower price</label></span>
+                            </li>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="3">
+                                <span class="label"><label for="vote_3">Bigger choice</label></span>
+                            </li>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="5">
+                                <span class="label"><label for="vote_5">Payments security </label></span>
+                            </li>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="6">
+                                <span class="label">
+                                    <label for="vote_6">
+                                        30-day Money Back Guarantee
+                                    </label>
+                                </span>
+                            </li>
+                            <li>
+                                <input type="radio" name="vote" class="radio" value="7">
+                                <span class="label"><label for="vote_7">Other.</label></span>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</section>
+<script src="~/js/master/foodinfo.js"></script>
