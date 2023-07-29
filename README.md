@@ -17,7 +17,7 @@ Cài đặt Umbraco CMS: Trước tiên, bạn cần cài đặt Umbraco CMS tr�
 3. Mở trình duyệt và truy cập địa chỉ `http://localhost/umbraco` để tiến hành cài đặt Umbraco.
     lecao11102001@gmail.com 
     nhan11102001
-![Alt text](image.png)
+![Alt text](image/image.png)
 4. Sau khi cài đặt thành công, truy cập trang quản trị Umbraco để tùy chỉnh nội dung và cấu hình trang web.
 
 # Thiết kế website
@@ -38,6 +38,6 @@ Tùy chỉnh hình ảnh và video: Thêm hình ảnh và video của nhà hàng
 
 # Giao diện
     Trang chủ
-![Alt text](image-1.png)
+![Alt text](image/image-1.png)
     Trang đặt bàn
-![Alt text](image-2.png)
+![Alt text](image/image-2.png)
